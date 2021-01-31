@@ -27,7 +27,7 @@ int foodX;
 int foodY;
 
 int direction = UP;
-int piecesOfFood = 0;
+int foodEaten = 0;
 //*
 // ***** SETUP METHODS *****
 // These methods are called at the start of the game.
@@ -41,10 +41,9 @@ dropFood();
 }
 
 void dropFood() {
-  //Set the food in a new random location
-    foodX = ((int)random(50)*10);
+  foodX = ((int)random(50)*10);
+  foodY = ((int)random(50)*10);
 }
-
 
 
 //*
@@ -55,21 +54,23 @@ void dropFood() {
 void draw() {
 background(#3B14F2);
 drawFood();
+move();
 drawSnake();
+eat();
+
 }
 
 void drawFood() {
   //Draw the food
   fill(#77DE83);
-  foodX = ((int)random(50)*10);
-  foodY = ((int)random(50)*10);
-  rect(80,90,20,20);
+
+  rect(foodX, foodY, 20,20);
 }
 
 void drawSnake() {
   //Draw the head of the snake followed by its tail
   fill(#FFBC12);
-  rect(75,60, 20, 20);
+  rect(head.x, head.y, 20, 20);
  
 }
 
@@ -106,13 +107,13 @@ void keyPressed() {
   //Set the direction of the snake according to the arrow keys pressed
   if (key == CODED) {
      if(keyCode == UP) {
-       direction = up;
+       direction = UP;
      } else if (keyCode == DOWN) {
        direction = DOWN;
      } else if (keyCode == LEFT) {
-       direction  = RIGHT;
-       else if (keyCode == RIGHT) {
-       direction = LEFT;
+       direction  = LEFT;
+     } else if (keyCode == RIGHT) {
+       direction = RIGHT;
      }
 }
   
@@ -123,28 +124,43 @@ void move() {
     
   switch(direction) {
   case UP:
-    direction UP;
+   head.y-=2;
     break;
   case DOWN:
-    // move head down here 
+    head.y+=2; 
     break;
   case LEFT:
-   // figure it out 
+   head.x-=2; 
     break;
   case RIGHT:
-    // mystery code goes here 
+    head.x+=2; 
     break;
   }
-  
+  checkBoundaries();
 }
 
 void checkBoundaries() {
  //If the snake leaves the frame, make it reappear on the other side
- 
+ if (head.x > 500){
+   head.x = 0;
+ } else if (head.x < 0) {
+   head.x = 500;
+ } else if (head.y > 500) {
+   head.y = 0;
+ } else if (head.y < 0) {
+   head.y = 500;
+ }
+
 }
 
 
 
 void eat() {
   //When the snake eats the food, its tail should grow and more food appear
+if((head.x == foodX) && (head.y == foodY)){
+  foodEaten++;
+  dropFood();
+  print("hi");
+}
+  
 }
