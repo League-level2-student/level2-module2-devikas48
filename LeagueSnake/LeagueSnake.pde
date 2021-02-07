@@ -28,6 +28,10 @@ int foodY;
 
 int direction = UP;
 int foodEaten = 0;
+
+
+ArrayList <Segment> tail = new ArrayList <Segment>();
+
 //*
 // ***** SETUP METHODS *****
 // These methods are called at the start of the game.
@@ -36,7 +40,7 @@ int foodEaten = 0;
 void setup() {
 size (500,500);
 head = new Segment(75,60);
-frameRate(20);
+frameRate(10);
 dropFood();
 }
 
@@ -64,13 +68,13 @@ void drawFood() {
   //Draw the food
   fill(#77DE83);
 
-  rect(foodX, foodY, 20,20);
+  rect(foodX, foodY, 10,10);
 }
 
 void drawSnake() {
   //Draw the head of the snake followed by its tail
   fill(#FFBC12);
-  rect(head.x, head.y, 20, 20);
+  rect(head.x, head.y, 10, 10);
  
 }
 
@@ -82,13 +86,14 @@ void drawSnake() {
 
 void drawTail() {
   //Draw each segment of the tail 
-
+rect(50,50,10,10);
 }
 
 void manageTail() {
   //After drawing the tail, add a new segment at the "start" of the tail and remove the one at the "end" 
   //This produces the illusion of the snake tail moving.
-  
+  checkTailCollision();
+  drawTail();
 }
 
 void checkTailCollision() {
@@ -124,16 +129,16 @@ void move() {
     
   switch(direction) {
   case UP:
-   head.y-=2;
+   head.y-=5;
     break;
   case DOWN:
-    head.y+=2; 
+    head.y+=5; 
     break;
   case LEFT:
-   head.x-=2; 
+   head.x-=5; 
     break;
   case RIGHT:
-    head.x+=2; 
+    head.x+=5; 
     break;
   }
   checkBoundaries();
