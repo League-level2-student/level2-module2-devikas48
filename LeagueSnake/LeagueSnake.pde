@@ -68,14 +68,14 @@ void drawFood() {
   //Draw the food
   fill(#77DE83);
 
-  rect(foodX, foodY, 10,10);
+  rect(foodX, foodY, 10, 10);
 }
 
 void drawSnake() {
   //Draw the head of the snake followed by its tail
   fill(#FFBC12);
   rect(head.x, head.y, 10, 10);
- 
+ manageTail();
 }
 
 
@@ -86,18 +86,29 @@ void drawSnake() {
 
 void drawTail() {
   //Draw each segment of the tail 
-rect(50,50,10,10);
+for(int i = 0; i < tail.size(); i++){
+rect(tail.get(i).x, tail.get(i).y, 10, 10);
 }
-
+}
 void manageTail() {
   //After drawing the tail, add a new segment at the "start" of the tail and remove the one at the "end" 
   //This produces the illusion of the snake tail moving.
   checkTailCollision();
   drawTail();
+  tail.add(new Segment(head.x, head.y));
+  tail.remove(0);
 }
 
 void checkTailCollision() {
   //If the snake crosses its own tail, shrink the tail back to one segment
+ for(int i = 0; i < tail.size(); i++){
+   if(head.x == tail.get(i).x && head.y == tail.get(i).x){
+     foodEaten = 1;
+     tail = new ArrayList <Segment>();
+     tail.add(new Segment(head.x, head.y));
+  }
+ }
+  
   
 }
 
@@ -165,7 +176,8 @@ void eat() {
 if((head.x == foodX) && (head.y == foodY)){
   foodEaten++;
   dropFood();
-  print("hi");
+  tail.add(new Segment(head.x, head.y));
+  
 }
   
 }
