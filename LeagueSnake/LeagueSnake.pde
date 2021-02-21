@@ -6,8 +6,8 @@
 public class Segment {
 
 //Add x and y member variables. They will hold the corner location of each segment of the snake.
-int x = 50;
-int y = 100;
+int x;
+int y;
 
 // Add a constructor with parameters to initialize each variable.
 public Segment (int x, int y) {
@@ -122,13 +122,13 @@ void checkTailCollision() {
 void keyPressed() {
   //Set the direction of the snake according to the arrow keys pressed
   if (key == CODED) {
-     if(keyCode == UP) {
+     if(keyCode == UP && direction != DOWN) {
        direction = UP;
-     } else if (keyCode == DOWN) {
+     } else if (keyCode == DOWN && direction != UP) {
        direction = DOWN;
-     } else if (keyCode == LEFT) {
+     } else if (keyCode == LEFT && direction != RIGHT) {
        direction  = LEFT;
-     } else if (keyCode == RIGHT) {
+     } else if (keyCode == RIGHT && direction != LEFT) {
        direction = RIGHT;
      }
 }
@@ -140,16 +140,16 @@ void move() {
     
   switch(direction) {
   case UP:
-   head.y-=5;
+   head.y-=10;
     break;
   case DOWN:
-    head.y+=5; 
+    head.y+=10; 
     break;
   case LEFT:
-   head.x-=5; 
+   head.x-=10; 
     break;
   case RIGHT:
-    head.x+=5; 
+    head.x+=10; 
     break;
   }
   checkBoundaries();
